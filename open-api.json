@@ -1,0 +1,780 @@
+{
+  "openapi": "3.0.1",
+  "servers": [
+    {
+      "url": "http://localhost:8082/bug",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "bug Rest",
+      "description": "REST APIs related to bug "
+    }
+  ],
+  "paths": {
+    "/api/bugs/{id}": {
+      "get": {
+        "tags": [
+          "bug-rest-impl"
+        ],
+        "summary": "Get a bug by its id",
+        "operationId": "getbug",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of bug to be searched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the bug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDetailsWrapper"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "bug-rest-impl"
+        ],
+        "summary": "Update a bug by its id",
+        "operationId": "updatebug",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of bug to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated bug properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BugDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated the bug Sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDetailsWrapper"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "bug-rest-impl"
+        ],
+        "summary": "Delete a bug by its id",
+        "operationId": "deletebug",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of bug to be delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete the Bug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "bug not found"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "summary": "Get all Users",
+        "operationId": "getAllUser",
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserResponseWrapper"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "summary": "Add a User",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "User Properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added the User Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload supplied"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "summary": "Get a User by its id",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user to be searched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "summary": "Update a User by its id",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated User properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated the User Sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsWrapper"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "summary": "Delete a user by its id",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user to be delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete the User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/projects/{id}": {
+      "get": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Get a Project by its id",
+        "operationId": "getProject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of project to be searched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetailsWrapper"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Update a Project by its id",
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of project to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Project properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated the Project Sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetailsWrapper"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Delete a Project by its id",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of project to be delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete the Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      }
+    },
+    "/api/projects": {
+      "get": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Get all Projects",
+        "operationId": "getAllProject",
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectDetailsWrapper"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Add a Project",
+        "operationId": "createProject",
+        "requestBody": {
+          "description": "Project Properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added the Project Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload supplied"
+          }
+        }
+      }
+    },
+    "/api/users/dev": {
+      "get": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "operationId": "getAllDeveloper",
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserResponseWrapper"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bugs": {
+      "get": {
+        "tags": [
+          "bug-rest-impl"
+        ],
+        "summary": "Get all bugs",
+        "operationId": "getAllBug",
+        "responses": {
+          "200": {
+            "description": "Get all Bug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "bug-rest-impl"
+        ],
+        "summary": "Add a bug",
+        "operationId": "createbug",
+        "requestBody": {
+          "description": "Bug Properties payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BugDetailsWrapper"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added the bug Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDetailsWrapper"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload supplied"
+          }
+        }
+      }
+    },
+    "/api/projects/{id}/bugs": {
+      "get": {
+        "tags": [
+          "project-rest-impl"
+        ],
+        "summary": "Get all bugs for provided project id",
+        "operationId": "getAllBugs",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of project",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete the Project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "Bug not found"
+          }
+        }
+      }
+    },
+    "/api/users/{id}/active": {
+      "put": {
+        "tags": [
+          "user-rest-impl"
+        ],
+        "operationId": "activateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationStatusModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BugDetailsWrapper": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bugId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "FIX",
+              "OPEN",
+              "CLOSE",
+              "NOT_AN_ISSUE",
+              "IN_PROGRESS"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDetailsWrapper": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "DEVELOPER",
+              "QA"
+            ]
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ProjectDetailsWrapper": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "projectName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "NOT_ACTIVE",
+              "DEPLOYED",
+              "CLOSE",
+              "INPROGRESS"
+            ]
+          }
+        }
+      },
+      "UserResponseWrapper": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "DEVELOPER",
+              "QA"
+            ]
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OperationStatusModel": {
+        "type": "object",
+        "properties": {
+          "operationStatus": {
+            "type": "string"
+          },
+          "operationName": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
