@@ -126,7 +126,7 @@
 				<configuration>
 					<apiDocsUrl>http://localhost:8082/v3/api-docs</apiDocsUrl>
 					<outputFileName>openapi.json</outputFileName>
-					<outputDir>C:\Users\sohail.a.khan\Desktop\Bug-tracking-sys\Bug-tracking-service\Bug-Tracker\</outputDir>
+					<outputDir>C:\Bug-Tracker\Bug-tracking-service\</outputDir>
 				</configuration>
 			</plugin>
 
