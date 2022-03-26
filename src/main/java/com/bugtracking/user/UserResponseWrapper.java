@@ -12,6 +12,16 @@ public class UserResponseWrapper extends BaseWrapper {
 	private String lastName;
 
 	private String email;
+	
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	private UserRole role;
 
@@ -67,8 +77,10 @@ public class UserResponseWrapper extends BaseWrapper {
 
 	@Override
 	public String toString() {
-		return "UserDetailsWrapper [userId=" + userId + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
+		return "UserResponseWrapper [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", password=" + password + ", role=" + role + ", isActive=" + isActive + "]";
 	}
+
+	
 
 }

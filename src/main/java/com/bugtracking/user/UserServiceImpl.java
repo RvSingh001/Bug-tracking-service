@@ -98,7 +98,7 @@ public class UserServiceImpl implements IUserService {
 		storeUser.setFirstName(userDetailsWrapper.getFirstName());
 		storeUser.setLastName(userDetailsWrapper.getLastName());
 		storeUser.setEmail(userDetailsWrapper.getEmail());
-		storeUser.setPassword(userDetailsWrapper.getPassword());
+		storeUser.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
 		storeUser.setRole(userDetailsWrapper.getRole());
 		User returnValue = userDao.save(storeUser);
 		return mapper.map(returnValue, UserResponseWrapper.class);
