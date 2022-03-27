@@ -14,7 +14,7 @@ public interface IUserService  extends UserDetailsService {
 
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper);
 
-	public List<UserResponseWrapper> getAllUsers();
+	public List<UserResponseWrapper> getAllUsers(String UserRole);
 
 	public OperationStatusModel deleteUser(String id);
 

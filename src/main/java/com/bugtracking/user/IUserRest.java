@@ -53,9 +53,9 @@ public interface IUserRest {
 	public UserResponseWrapper updateUser(@Parameter(description = "id of user to be updated") @PathVariable String id,
 			@Parameter(description = "Updated User properties payload") @RequestBody UserDetailsWrapper userDetailsWrapper);
 
-	@GetMapping()
+	@GetMapping(path="/role/{userRole}")
 	@Operation(summary = "Get all Users")
-	public List<UserResponseWrapper> getAllUser();
+	public List<UserResponseWrapper> getAllUser(@PathVariable String userRole);
 
 	@DeleteMapping(path = "/{id}")
 	@Operation(summary = "Delete a user by its id")

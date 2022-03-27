@@ -24,8 +24,9 @@ public class UserRestImpl implements IUserRest {
 	 * 
 	 **/
 	@Override
-	public List<UserResponseWrapper> getAllUser() {
-		return userServiceImpl.getAllUsers();
+	public List<UserResponseWrapper> getAllUser(String userRole) {
+		System.out.print(userRole);
+		return userServiceImpl.getAllUsers(userRole);
 	}
 
 	/**
