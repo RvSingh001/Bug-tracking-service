@@ -12,7 +12,7 @@ public class BugDetailsWrapper extends BaseWrapper {
 
 	private String description;
 
-	private String type;
+
 
 	private BugStatus status;
 
@@ -23,6 +23,16 @@ public class BugDetailsWrapper extends BaseWrapper {
 	private String userId;
 	
 	private String createdBy;
+	
+	private String developer;
+
+	public String getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
 
 	public String getProjectId() {
 		return projectId;
@@ -64,13 +74,7 @@ public class BugDetailsWrapper extends BaseWrapper {
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 
 	public BugStatus getStatus() {
 		return status;

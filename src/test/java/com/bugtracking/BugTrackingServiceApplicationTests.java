@@ -1,4 +1,4 @@
-package com.bts.bugtracking;
+package com.bugtracking;
 
 class BugTrackingServiceApplicationTests {
 

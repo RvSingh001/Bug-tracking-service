@@ -36,8 +36,10 @@ public class Bug extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "type")
-	private String type;
+	
+	@Column(name="developer")
+	private String developer;
+
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
@@ -97,13 +99,7 @@ public class Bug extends BaseEntity {
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 
 	public BugStatus getStatus() {
 		return status;
@@ -137,6 +133,13 @@ public class Bug extends BaseEntity {
 		this.user = user;
 	}
 
+	public String getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
 	public enum BugStatus {
 		FIX, OPEN, CLOSE, NOT_AN_ISSUE, IN_PROGRESS
 	}

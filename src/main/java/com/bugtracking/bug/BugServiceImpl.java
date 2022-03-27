@@ -81,6 +81,7 @@ public class BugServiceImpl implements IBugService {
 		Bug bug = mapper.map(bugDetailsWrapper, Bug.class);
 		bug.setProject(project);
 		bug.setUser(assignUser);
+		bug.setDeveloper(assignUser.getFirstName()+" "+assignUser.getLastName());
 		bug = bugDao.save(bug);
 		return mapper.map(bug, BugDetailsWrapper.class);
 	}
@@ -102,7 +103,7 @@ public class BugServiceImpl implements IBugService {
 		}
 		storeBug.setDescription(bugDetailsWrapper.getDescription());
 		storeBug.setTitle(bugDetailsWrapper.getTitle());
-		storeBug.setType(bugDetailsWrapper.getType());
+		
 		storeBug.setStatus(bugDetailsWrapper.getStatus());
 		Bug returnValue = bugDao.save(storeBug);
 		return mapper.map(returnValue, BugDetailsWrapper.class);

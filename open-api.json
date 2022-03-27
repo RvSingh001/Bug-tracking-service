@@ -756,7 +756,8 @@
             "enum": [
               "ADMIN",
               "DEVELOPER",
-              "QA"
+              "QA",
+              "SUPER_ADMIN"
             ]
           },
           "active": {
