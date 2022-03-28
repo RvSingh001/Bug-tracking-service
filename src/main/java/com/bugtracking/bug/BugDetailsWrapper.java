@@ -12,8 +12,6 @@ public class BugDetailsWrapper extends BaseWrapper {
 
 	private String description;
 
-
-
 	private BugStatus status;
 
 	private BugPriority priority;
@@ -21,9 +19,9 @@ public class BugDetailsWrapper extends BaseWrapper {
 	private String projectId;
 
 	private String userId;
-	
+
 	private String createdBy;
-	
+
 	private String developer;
 
 	public String getDeveloper() {
@@ -73,8 +71,6 @@ public class BugDetailsWrapper extends BaseWrapper {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 
 	public BugStatus getStatus() {
 		return status;

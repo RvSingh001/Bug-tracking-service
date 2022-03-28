@@ -4,7 +4,9 @@ import com.bugtracking.SpringApplicationContext;
 
 public class SecurityConstants {
 
-	private SecurityConstants() {}
+	private SecurityConstants() {
+	}
+
 	private static ApplicationProperty applicationProperty;
 
 	static {
@@ -12,9 +14,8 @@ public class SecurityConstants {
 	}
 
 	public static final String SING_UP_URL = "/api/users/";
-	
-	public static final String SWAGGER_URL = "/swagger-ui/index.html?configUrl=/bug/v3/api-docs/swagger-config";
 
+	public static final String SWAGGER_URL = "/swagger-ui/index.html?configUrl=/bug/v3/api-docs/swagger-config";
 
 	public static String getTokenSecret() {
 		return applicationProperty.getTokenSecret();

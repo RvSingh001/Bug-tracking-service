@@ -1,7 +1,7 @@
 package com.bugtracking.user;
 
 public class UserServiceException extends RuntimeException {
-	
+
 	/**
 	 * 
 	 */

@@ -12,7 +12,7 @@ public class UserResponseWrapper extends BaseWrapper {
 	private String lastName;
 
 	private String email;
-	
+
 	private String password;
 
 	public String getPassword() {
@@ -80,7 +80,5 @@ public class UserResponseWrapper extends BaseWrapper {
 		return "UserResponseWrapper [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + ", password=" + password + ", role=" + role + ", isActive=" + isActive + "]";
 	}
-
-	
 
 }

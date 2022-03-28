@@ -53,7 +53,7 @@ public interface IUserRest {
 	public UserResponseWrapper updateUser(@Parameter(description = "id of user to be updated") @PathVariable String id,
 			@Parameter(description = "Updated User properties payload") @RequestBody UserDetailsWrapper userDetailsWrapper);
 
-	@GetMapping(path="/role/{userRole}")
+	@GetMapping(path = "/role/{userRole}")
 	@Operation(summary = "Get all Users")
 	public List<UserResponseWrapper> getAllUser(@PathVariable String userRole);
 
@@ -65,11 +65,9 @@ public interface IUserRest {
 			@ApiResponse(responseCode = "404", description = "User not found", content = @Content) })
 	public OperationStatusModel deleteUser(@Parameter(description = "id of user to be delete") @PathVariable String id);
 
-	
 	@GetMapping("/dev")
 	public List<UserResponseWrapper> getAllDeveloper();
-	
-	
+
 	@PutMapping("/{id}/active")
 	public OperationStatusModel activateUser(@PathVariable String id);
 

@@ -17,5 +17,5 @@ public interface IProjectService {
 	public OperationStatusModel deleteProject(String id);
 
 	public List<BugDetailsWrapper> getAllBugByProjectId(String id);
-	
+
 }

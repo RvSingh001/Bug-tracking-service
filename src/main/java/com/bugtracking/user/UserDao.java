@@ -10,20 +10,8 @@ import com.bugtracking.user.User.UserRole;
 
 public interface UserDao extends JpaRepository<User, Long> {
 
-	/**
-	 * Dao method used to find a project by id
-	 * 
-	 * @param projectId String
-	 * @return Project
-	 */
 	public User findUserByUserId(String userId);
 
-	/**
-	 * Dao method used to to delete a project by id
-	 * 
-	 * @param projectId String
-	 * @return Project
-	 */
 	public Long deleteByUserId(String userId);
 
 	public User findByBugs(Bug bugs);

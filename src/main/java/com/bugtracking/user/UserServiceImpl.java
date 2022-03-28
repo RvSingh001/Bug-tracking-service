@@ -41,140 +41,116 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	static String Role;
 
-	/**
-	 * Service Method used to get a project by projectId
-	 * 
-	 * @param id String
-	 * @return returnValue ProjectDetailsWrapper
-	 * @throws ProjectServiceException
-	 * 
-	 **/
-	@Override
-	public UserResponseWrapper getUser(String id) throws UserServiceException {
-		
-		if(Role.equals(UserRole.SUPER_ADMIN.toString())||Role.equals(UserRole.ADMIN.toString()))
-		{
-		User user = userDao.findUserByUserId(id);
-		if (user == null) {
-			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-		return mapper.map(user, UserResponseWrapper.class);
-		}
-		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-
-	}
-
-	/**
-	 * Service Method used to create a project
-	 * 
-	 * @param projectDetailsWrapper ProjectDetailsWrapper
-	 * @return returnValue ProjectDetailsWrapper
-	 */
 	@Override
 	public UserResponseWrapper createUser(UserDetailsWrapper userDetailsWrapper) {
-		
-		if(Role.equals(UserRole.SUPER_ADMIN.toString())||Role.equals(User.UserRole.ADMIN.toString())) {
-		
-		if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
-			throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
-		}
-		userDetailsWrapper.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
-		String publicId = userUtils.generateUserId(15);
-		userDetailsWrapper.setUserId(publicId);
-		User user = mapper.map(userDetailsWrapper, User.class);
-		user = userDao.save(user);
-		return mapper.map(user, UserResponseWrapper.class);
+
+		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(User.UserRole.ADMIN.toString())) {
+
+			if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
+				throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+			}
+			userDetailsWrapper.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
+			String publicId = userUtils.generateUserId(15);
+			userDetailsWrapper.setUserId(publicId);
+			User user = mapper.map(userDetailsWrapper, User.class);
+			user = userDao.save(user);
+			return mapper.map(user, UserResponseWrapper.class);
 		}
 		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
 	}
 
-	/**
-	 * Service Method used to update a existing project
-	 * 
-	 * @param id                    String
-	 * @param projectDetailsWrapper ProjectDetailsWrapper
-	 * @return returnValue ProjectDetailsWrapper
-	 * @throws ProjectServiceException
-	 * 
-	 **/
 	@Override
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper)
 			throws UserServiceException {
-		if(Role.equals(UserRole.SUPER_ADMIN.toString())||Role.equals(UserRole.ADMIN.toString())) {
-			
-		User storeUser = userDao.findUserByUserId(id);
+		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
 
-		if (userDetailsWrapper.getRole() == UserRole.SUPER_ADMIN) {
-			throw new UserServiceException(ErrorMessages.SUPER_ADMIN.getErrorMessage());
-		}
-		if (storeUser == null) {
-			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-		storeUser.setFirstName(userDetailsWrapper.getFirstName());
-		storeUser.setLastName(userDetailsWrapper.getLastName());
-		storeUser.setEmail(userDetailsWrapper.getEmail());
-		storeUser.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
-		storeUser.setRole(userDetailsWrapper.getRole());
-		User returnValue = userDao.save(storeUser);
-		return mapper.map(returnValue, UserResponseWrapper.class);
+			User storeUser = userDao.findUserByUserId(id);
+
+			if (userDetailsWrapper.getRole() == UserRole.ADMIN) {
+				throw new UserServiceException(ErrorMessages.ADMIN.getErrorMessage());
+			}
+			if (storeUser == null) {
+				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			}
+			storeUser.setFirstName(userDetailsWrapper.getFirstName());
+			storeUser.setLastName(userDetailsWrapper.getLastName());
+			storeUser.setEmail(userDetailsWrapper.getEmail());
+			storeUser.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
+			storeUser.setRole(userDetailsWrapper.getRole());
+			User returnValue = userDao.save(storeUser);
+			return mapper.map(returnValue, UserResponseWrapper.class);
 		}
 		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
 	}
 
-	/**
-	 * Service Method used to get all projects
-	 * 
-	 * @return {@code List<ProjectDetailsWrapper>}
-	 * 
-	 **/
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
-	public List<UserResponseWrapper> getAllUsers(String userRole) {
-		
-		Role=userRole;
+	@Transactional
+	public OperationStatusModel deleteUser(String id) {
 
-		if (userRole.equals(UserRole.ADMIN.toString()) || userRole.equals(UserRole.SUPER_ADMIN.toString())) {
-			
-			List<User> allUser = userDao.findAll();
-			return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class))
-					.collect(Collectors.toList());
+		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+
+			OperationStatusModel returnValue = new OperationStatusModel();
+			User user = userDao.findUserByUserId(id);
+
+			if (user.getRole() == UserRole.ADMIN) {
+				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+				return returnValue;
+			}
+
+			returnValue.setOperationName(RequestOperationName.DELETE.name());
+			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+			userDao.deleteByUserId(id);
+			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
+			return returnValue;
 		}
+		throw new UserServiceException(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
+	}
 
+	@Override
+	public OperationStatusModel activedUser(String id) {
+		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+			User existingUser = userDao.findUserByUserId(id);
+			OperationStatusModel returnValue = new OperationStatusModel();
+
+			if (existingUser.getRole() == UserRole.ADMIN) {
+				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+				return returnValue;
+			}
+			if (existingUser == null) {
+				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			}
+
+			boolean status = existingUser.isActive();
+			if (status) {
+				returnValue.setOperationName(RequestOperationName.DEACTIVE.name());
+				existingUser.setActive(false);
+			} else {
+				returnValue.setOperationName(RequestOperationName.ACTIVE.name());
+				existingUser.setActive(true);
+			}
+			userDao.save(existingUser);
+			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
+			return returnValue;
+		}
 		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 	}
 
-	/**
-	 * Service Method used to delete a existing project by projectId
-	 * 
-	 * @param id String
-	 * @return returnValue OperationStatusModel
-	 * 
-	 **/
 	@Override
-	@Transactional
-	public OperationStatusModel deleteUser(String id) {
-		
-		if (Role.equals(UserRole.SUPER_ADMIN.toString()) || Role.equals(UserRole.ADMIN.toString())) {
-		
-		OperationStatusModel returnValue = new OperationStatusModel();
-		User user = userDao.findUserByUserId(id);
+	public UserResponseWrapper getUser(String id) throws UserServiceException {
 
-		if (user.getRole() == UserRole.SUPER_ADMIN) {
-			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-			return returnValue;
+		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+			User user = userDao.findUserByUserId(id);
+			if (user == null) {
+				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			}
+			return mapper.map(user, UserResponseWrapper.class);
 		}
+		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
-		returnValue.setOperationName(RequestOperationName.DELETE.name());
-		returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-		userDao.deleteByUserId(id);
-		returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
-		return returnValue;
-		}
-		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
 	}
 
 	@Override
@@ -184,6 +160,30 @@ public class UserServiceImpl implements IUserService {
 			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		}
 		return mapper.map(user, UserResponseWrapper.class);
+
+	}
+
+	@Override
+	public UserResponseWrapper getUserByEmail(String email) {
+		User entity = userDao.findUserByEmail(email);
+		if (entity == null)
+			throw new UsernameNotFoundException(email);
+		return mapper.map(entity, UserResponseWrapper.class);
+	}
+
+	@Override
+	public List<UserResponseWrapper> getAllUsers(String userRole) {
+
+		Role = userRole;
+
+		if (userRole.equals(UserRole.PROJECT_MANAGER.toString()) || userRole.equals(UserRole.ADMIN.toString())) {
+
+			List<User> allUser = userDao.findAll();
+			return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class))
+					.collect(Collectors.toList());
+		}
+
+		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 
 	}
 
@@ -198,32 +198,6 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public OperationStatusModel activedUser(String id) {
-		User existingUser = userDao.findUserByUserId(id);
-		OperationStatusModel returnValue = new OperationStatusModel();
-
-		if (existingUser.getRole() == UserRole.SUPER_ADMIN) {
-			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-			return returnValue;
-		}
-		if (existingUser == null) {
-			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-
-		boolean status = existingUser.isActive();
-		if (status) {
-			returnValue.setOperationName(RequestOperationName.DEACTIVE.name());
-			existingUser.setActive(false);
-		} else {
-			returnValue.setOperationName(RequestOperationName.ACTIVE.name());
-			existingUser.setActive(true);
-		}
-		userDao.save(existingUser);
-		returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
-		return returnValue;
-	}
-
-	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		User entity = userDao.findUserByEmail(username);
@@ -232,14 +206,6 @@ public class UserServiceImpl implements IUserService {
 		}
 		return new org.springframework.security.core.userdetails.User(entity.getEmail(), entity.getPassword(),
 				entity.isActive(), true, true, true, new ArrayList<>());
-	}
-
-	@Override
-	public UserResponseWrapper getUserByEmail(String email) {
-		User entity = userDao.findUserByEmail(email);
-		if (entity == null)
-			throw new UsernameNotFoundException(email);
-		return mapper.map(entity, UserResponseWrapper.class);
 	}
 
 }

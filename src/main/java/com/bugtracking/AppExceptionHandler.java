@@ -19,12 +19,7 @@ public class AppExceptionHandler {
 
 	public static final Logger logger = LogManager.getLogger(AppExceptionHandler.class);
 
-	/**
-	 * Method used to catch and log all exception
-	 * 
-	 * @return {@code  ResponseEntity<Object> }
-	 * 
-	 **/
+	
 	@ExceptionHandler(value = Exception.class)
 	public static ResponseEntity<Object> universalExceptionHandler(Exception exception, WebRequest request) {
 		logger.error("Exception:: {}", ExceptionUtils.getStackTrace(exception));

@@ -1,7 +1,7 @@
 package com.bugtracking.user.shared;
 
 public class OperationStatusModel {
-	
+
 	private String operationStatus;
 
 	private String operationName;

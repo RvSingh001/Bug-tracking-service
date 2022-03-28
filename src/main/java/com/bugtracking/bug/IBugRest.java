@@ -62,5 +62,5 @@ public interface IBugRest {
 			@ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "bug not found", content = @Content) })
 	public OperationStatusModel deletebug(@Parameter(description = "id of bug to be delete") @PathVariable String id);
-	
+
 }
