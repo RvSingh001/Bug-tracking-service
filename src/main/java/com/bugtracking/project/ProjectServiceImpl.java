@@ -32,6 +32,14 @@ public class ProjectServiceImpl implements IProjectService {
 	@Autowired
 	IBugService bugService;
 
+	/**
+	 * Service Method used to get a project by projectId
+	 * 
+	 * @param id String
+	 * @return returnValue ProjectDetailsWrapper
+	 * @throws ProjectServiceException
+	 * 
+	 **/
 	@Override
 	public ProjectDetailsWrapper getProject(String id) throws ProjectServiceException {
 		Project project = projectDao.findProjectByProjectId(id);
@@ -42,6 +50,12 @@ public class ProjectServiceImpl implements IProjectService {
 
 	}
 
+	/**
+	 * Service Method used to create a project
+	 * 
+	 * @param projectDetailsWrapper ProjectDetailsWrapper
+	 * @return returnValue ProjectDetailsWrapper
+	 */
 	@Override
 	public ProjectDetailsWrapper createProject(ProjectDetailsWrapper projectDetailsWrapper) {
 		String publicId = projectUtils.generateProjectId(15);
@@ -51,6 +65,15 @@ public class ProjectServiceImpl implements IProjectService {
 		return mapper.map(project, ProjectDetailsWrapper.class);
 	}
 
+	/**
+	 * Service Method used to update a existing project
+	 * 
+	 * @param id String
+	 * @param projectDetailsWrapper ProjectDetailsWrapper
+	 * @return returnValue ProjectDetailsWrapper
+	 * @throws ProjectServiceException
+	 * 
+	 **/
 	@Override
 	public ProjectDetailsWrapper updateProject(String id, ProjectDetailsWrapper projectDetailsWrapper)
 			throws ProjectServiceException {
@@ -66,6 +89,12 @@ public class ProjectServiceImpl implements IProjectService {
 		return mapper.map(returnValue, ProjectDetailsWrapper.class);
 	}
 
+	/**
+	 * Service Method used to get all projects
+	 * 
+	 * @return {@code List<ProjectDetailsWrapper>}
+	 * 
+	 **/
 	@Override
 	public List<ProjectDetailsWrapper> getAllProjects() {
 		List<Project> allProject = projectDao.findAll();
@@ -74,6 +103,13 @@ public class ProjectServiceImpl implements IProjectService {
 
 	}
 
+	/**
+	 * Service Method used to delete a existing project by projectId
+	 * 
+	 * @param id String
+	 * @return returnValue OperationStatusModel
+	 * 
+	 **/
 	@Override
 	@Transactional
 	public OperationStatusModel deleteProject(String id) {
@@ -85,6 +121,13 @@ public class ProjectServiceImpl implements IProjectService {
 		return returnValue;
 	}
 
+	/**
+	 * Service Method used to get all existing bugs by projectId
+	 * 
+	 * @param id String
+	 * @return {@code List<Bug>}
+	 * 
+	 **/
 	@Override
 	public List<BugDetailsWrapper> getAllBugByProjectId(String id) {
 		Project existingProject = projectDao.findProjectByProjectId(id);

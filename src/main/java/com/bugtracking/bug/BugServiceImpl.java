@@ -48,6 +48,14 @@ public class BugServiceImpl implements IBugService {
 		this.userDao = userDao;
 	}
 
+	/**
+	 * Service Method used to get a bug by bugId
+	 * 
+	 * @param id String
+	 * @return returnValue BugDetailsWrapper
+	 * @throws BugServiceException
+	 * 
+	 **/
 	@Override
 	public BugDetailsWrapper getbug(String id) throws BugServiceException {
 		Bug bug = bugDao.findByBugId(id);
@@ -58,6 +66,12 @@ public class BugServiceImpl implements IBugService {
 
 	}
 
+	/**
+	 * Service Method used to create a bug
+	 * 
+	 * @param bugDetailsWrapper BugDetailsWrapper
+	 * @return returnValue BugDetailsWrapper
+	 */
 	@Override
 	public BugDetailsWrapper createbug(BugDetailsWrapper bugDetailsWrapper) {
 		String publicId = bugUtils.generateBugId(15);
@@ -72,6 +86,15 @@ public class BugServiceImpl implements IBugService {
 		return mapper.map(bug, BugDetailsWrapper.class);
 	}
 
+	/**
+	 * Service Method used to update a existing bug
+	 * 
+	 * @param id String
+	 * @param bugDetailsWrapper BugDetailsWrapper
+	 * @return returnValue BugDetailsWrapper
+	 * @throws BugServiceException
+	 * 
+	 **/
 	@Override
 	public BugDetailsWrapper updatebug(String id, BugDetailsWrapper bugDetailsWrapper) throws BugServiceException {
 		Bug storeBug = bugDao.findByBugId(id);
@@ -86,6 +109,12 @@ public class BugServiceImpl implements IBugService {
 		return mapper.map(returnValue, BugDetailsWrapper.class);
 	}
 
+	/**
+	 * Service Method used to get all bugs
+	 * 
+	 * @return {@code List<BugDetailsWrapper>}
+	 * 
+	 **/
 	@Override
 	public List<BugDetailsWrapper> getAllBug() {
 		List<Bug> allBugs = bugDao.findAll();
@@ -93,6 +122,13 @@ public class BugServiceImpl implements IBugService {
 
 	}
 
+	/**
+	 * Service Method used to delete a existing bug by bugId
+	 * 
+	 * @param id String
+	 * @return returnValue OperationStatusModel
+	 * 
+	 **/
 	@Override
 	@Transactional
 	public OperationStatusModel deletebug(String id) {
@@ -104,6 +140,13 @@ public class BugServiceImpl implements IBugService {
 		return returnValue;
 	}
 
+	/**
+	 * Service Method used to get all existing bug by project
+	 * 
+	 * @param existingProject Project
+	 * @return returnValue List<BugDetailsWrapper>
+	 * 
+	 **/
 	@Override
 	public List<BugDetailsWrapper> getAllBugByProject(Project existingProject) {
 		List<Bug> bugs = bugDao.findByProject(existingProject);

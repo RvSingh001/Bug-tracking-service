@@ -44,6 +44,12 @@ public class UserServiceImpl implements IUserService {
 
 	static String Role;
 
+	/**
+	 * Service Method used to create a User
+	 * 
+	 * @param UserDetailsWrapper userDetailsWrapper
+	 * @return returnValue userDetailsWrapper
+	 */
 	@Override
 	public UserResponseWrapper createUser(UserDetailsWrapper userDetailsWrapper) {
 
@@ -62,6 +68,15 @@ public class UserServiceImpl implements IUserService {
 		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
 	}
 
+	/**
+	 * Service Method used to update a existing user
+	 * 
+	 * @param id String
+	 * @param UserDetailsWrapper userDetailsWrapper
+	 * @return returnValue UserDetailsWrapper
+	 * @throws UserServiceException
+	 * 
+	 **/
 	@Override
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper)
 			throws UserServiceException {
@@ -86,6 +101,12 @@ public class UserServiceImpl implements IUserService {
 		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
 	}
 
+	/**
+	 * Service Method used to delete user by id
+	 * 
+	 * @return {@code OperationStatusModel}
+	 * 
+	 **/
 	@Override
 	@Transactional
 	public OperationStatusModel deleteUser(String id) {
@@ -109,6 +130,12 @@ public class UserServiceImpl implements IUserService {
 		throw new UserServiceException(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
 	}
 
+	/**
+	 * Service Method used to active user by id
+	 * 
+	 * @return {@code OperationStatusModel}
+	 * 
+	 **/
 	@Override
 	public OperationStatusModel activedUser(String id) {
 		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
@@ -139,6 +166,12 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
+	/**
+	 * Service Method used to find user by id
+	 * 
+	 * @return {@code UserResponseWrapper}
+	 * 
+	 **/
 	@Override
 	public UserResponseWrapper getUser(String id) throws UserServiceException {
 
@@ -153,24 +186,12 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
-	@Override
-	public UserResponseWrapper getUserByBugId(Bug existingBug) {
-		User user = userDao.findByBugs(existingBug);
-		if (user == null) {
-			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-		return mapper.map(user, UserResponseWrapper.class);
-
-	}
-
-	@Override
-	public UserResponseWrapper getUserByEmail(String email) {
-		User entity = userDao.findUserByEmail(email);
-		if (entity == null)
-			throw new UsernameNotFoundException(email);
-		return mapper.map(entity, UserResponseWrapper.class);
-	}
-
+	/**
+	 * Service Method used to get all users
+	 * 
+	 * @return {@code List<UserResponseWrapper>}
+	 * 
+	 **/
 	@Override
 	public List<UserResponseWrapper> getAllUsers(String userRole) {
 
@@ -187,6 +208,42 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
+	/**
+	 * Service Method used to find user by bug
+	 * 
+	 * @return {@code UserResponseWrapper}
+	 * 
+	 **/
+	@Override
+	public UserResponseWrapper getUserByBugId(Bug existingBug) {
+		User user = userDao.findByBugs(existingBug);
+		if (user == null) {
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		return mapper.map(user, UserResponseWrapper.class);
+
+	}
+
+	/**
+	 * Service Method used to find user by email
+	 * 
+	 * @return {@code UserResponseWrapper}
+	 * 
+	 **/
+	@Override
+	public UserResponseWrapper getUserByEmail(String email) {
+		User entity = userDao.findUserByEmail(email);
+		if (entity == null)
+			throw new UsernameNotFoundException(email);
+		return mapper.map(entity, UserResponseWrapper.class);
+	}
+
+	/**
+	 * Service Method used to get all developer users
+	 * 
+	 * @return {@code List<UserResponseWrapper>}
+	 * 
+	 **/
 	@Override
 	public List<UserResponseWrapper> getAllDevUser() {
 		List<User> devUsers = userDao.findByRole(UserRole.DEVELOPER);
