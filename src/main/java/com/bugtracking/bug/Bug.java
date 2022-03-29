@@ -55,18 +55,18 @@ public class Bug extends BaseEntity {
 	@JoinColumn(name = "userid_fk", nullable = false)
 	private User user;
 
-	@Column(name = "created_by")
-	private String createdBy;
+	@Column(name = "createdby")
+	private String createdby;
 
 	public Bug() {
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
+	public String getCreatedby() {
+		return createdby;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
 	}
 
 	public Long getId() {

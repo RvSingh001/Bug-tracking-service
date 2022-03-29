@@ -18,7 +18,6 @@ public class UserDetailsWrapper extends BaseWrapper {
 	private UserRole role;
 
 	private boolean isActive;
-	
 
 	public String getUserId() {
 		return userId;

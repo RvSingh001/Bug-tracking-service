@@ -15,6 +15,8 @@ import com.bugtracking.shared.ErrorMessages;
 import com.bugtracking.shared.OperationStatusModel;
 import com.bugtracking.shared.RequestOperationName;
 import com.bugtracking.shared.RequestOperationStatus;
+import com.bugtracking.user.User;
+import com.bugtracking.user.UserDao;
 import com.bugtracking.utils.BugUtils;
 
 @Service("ProjectServiceImpl")
@@ -31,6 +33,9 @@ public class ProjectServiceImpl implements IProjectService {
 
 	@Autowired
 	IBugService bugService;
+	
+	@Autowired
+	UserDao userDao;
 
 	/**
 	 * Service Method used to get a project by projectId
@@ -58,9 +63,12 @@ public class ProjectServiceImpl implements IProjectService {
 	 */
 	@Override
 	public ProjectDetailsWrapper createProject(ProjectDetailsWrapper projectDetailsWrapper) {
+		
+		User user=userDao.findUserByUserId(projectDetailsWrapper.getCreateby());
 		String publicId = projectUtils.generateProjectId(15);
 		projectDetailsWrapper.setProjectId(publicId);
 		Project project = mapper.map(projectDetailsWrapper, Project.class);
+		project.setProjet_owner(user.getFirstName()+" "+user.getLastName());
 		project = projectDao.save(project);
 		return mapper.map(project, ProjectDetailsWrapper.class);
 	}

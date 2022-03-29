@@ -20,7 +20,7 @@ public class BugDetailsWrapper extends BaseWrapper {
 
 	private String userId;
 
-	private String createdBy;
+	private String createdby;
 
 	private String developer;
 
@@ -88,12 +88,12 @@ public class BugDetailsWrapper extends BaseWrapper {
 		this.priority = priority;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
+	public String getCreatedby() {
+		return createdby;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
 	}
 
 }

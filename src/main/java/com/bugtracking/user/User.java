@@ -29,13 +29,6 @@ public class User extends BaseEntity {
 	@Column(name = "first_name")
 	private String firstName;
 
-	public User(Long id) {
-		this.id = id;
-	}
-
-	public User() {
-	}
-
 	@Column(name = "last_name")
 	private String lastName;
 
@@ -54,6 +47,13 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "user")
 	private List<Bug> bugs;
+
+	public User(Long id) {
+		this.id = id;
+	}
+	
+	public User() {
+	}
 
 	public List<Bug> getBugs() {
 		return bugs;
@@ -124,7 +124,7 @@ public class User extends BaseEntity {
 	}
 
 	public enum UserRole {
-		SUPER_ADMIN, ADMIN , DEVELOPER , QA, PROJECT_MANAGER ;
+		SUPER_ADMIN, ADMIN, DEVELOPER, QA, PROJECT_MANAGER;
 	}
 
 }

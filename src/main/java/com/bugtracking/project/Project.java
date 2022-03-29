@@ -37,6 +37,12 @@ public class Project extends BaseEntity {
 	@Column(name = "decription")
 	private String description;
 
+	@Column(name = "createby")
+	private String createby;
+
+	@Column(name = "projet_owner")
+	private String projet_owner;
+
 	@Column(name = "type")
 	private String type;
 
@@ -44,18 +50,26 @@ public class Project extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ProjectStatus status;
 
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+	private List<Bug> bugs;
+
 	public Project(Long id) {
 		this.id = id;
 	}
-
-	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
-	private List<Bug> bugs;
 
 	public Project() {
 	}
 
 	public enum ProjectStatus {
 		ACTIVE, NOT_ACTIVE, DEPLOYED, CLOSE, INPROGRESS;
+	}
+
+	public String getProjet_owner() {
+		return projet_owner;
+	}
+
+	public void setProjet_owner(String projet_owner) {
+		this.projet_owner = projet_owner;
 	}
 
 	public String getProjectName() {
@@ -84,6 +98,14 @@ public class Project extends BaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getCreateby() {
+		return createby;
+	}
+
+	public void setCreateby(String createby) {
+		this.createby = createby;
 	}
 
 	public String getType() {

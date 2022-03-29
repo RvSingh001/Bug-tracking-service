@@ -13,7 +13,27 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 
 	private String type;
 
+	private String createby;
+
+	private String projet_owner;
+
 	private ProjectStatus status;
+
+	public String getProjet_owner() {
+		return projet_owner;
+	}
+
+	public void setProjet_owner(String projet_owner) {
+		this.projet_owner = projet_owner;
+	}
+
+	public String getCreateby() {
+		return createby;
+	}
+
+	public void setCreateby(String createby) {
+		this.createby = createby;
+	}
 
 	public String getProjectId() {
 		return projectId;
@@ -58,7 +78,8 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 	@Override
 	public String toString() {
 		return "ProjectDetailsWrapper [projectId=" + projectId + ", projectName=" + projectName + ", description="
-				+ description + ", type=" + type + ", status=" + status + "]";
+				+ description + ", type=" + type + ", createby=" + createby + ", projet_owner=" + projet_owner
+				+ ", status=" + status + "]";
 	}
 
 }
