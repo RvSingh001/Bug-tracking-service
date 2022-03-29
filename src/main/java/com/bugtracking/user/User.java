@@ -124,7 +124,7 @@ public class User extends BaseEntity {
 	}
 
 	public enum UserRole {
-		ADMIN, PROJECT_MANAGER ,DEVELOPER, QA;
+		SUPER_ADMIN, ADMIN , DEVELOPER , QA, PROJECT_MANAGER ;
 	}
 
 }

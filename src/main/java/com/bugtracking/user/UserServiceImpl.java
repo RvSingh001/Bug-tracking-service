@@ -43,6 +43,10 @@ public class UserServiceImpl implements IUserService {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	static String Role;
+	
+	static String admin="ADMIN";
+	
+	static String super_admin="SUPER_ADMIN";
 
 	/**
 	 * Service Method used to create a User
@@ -53,7 +57,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper createUser(UserDetailsWrapper userDetailsWrapper) {
 
-		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(User.UserRole.ADMIN.toString())) {
+		if (Role.equals(admin) || Role.equals(super_admin)) {
 
 			if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
 				throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
@@ -80,12 +84,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper)
 			throws UserServiceException {
-		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+		if (Role.equals(admin) || Role.equals(super_admin)) {
 
 			User storeUser = userDao.findUserByUserId(id);
 
-			if (userDetailsWrapper.getRole() == UserRole.ADMIN) {
-				throw new UserServiceException(ErrorMessages.ADMIN.getErrorMessage());
+			if (userDetailsWrapper.getRole() == UserRole.SUPER_ADMIN) {
+				throw new UserServiceException(ErrorMessages.SUPER_ADMIN.getErrorMessage());
 			}
 			if (storeUser == null) {
 				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
@@ -111,12 +115,12 @@ public class UserServiceImpl implements IUserService {
 	@Transactional
 	public OperationStatusModel deleteUser(String id) {
 
-		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+		if (Role.equals(admin) || Role.equals(super_admin)) {
 
 			OperationStatusModel returnValue = new OperationStatusModel();
 			User user = userDao.findUserByUserId(id);
 
-			if (user.getRole() == UserRole.ADMIN) {
+			if (user.getRole() == UserRole.SUPER_ADMIN) {
 				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
 				return returnValue;
 			}
@@ -138,11 +142,11 @@ public class UserServiceImpl implements IUserService {
 	 **/
 	@Override
 	public OperationStatusModel activedUser(String id) {
-		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+		if (Role.equals(admin) || Role.equals(super_admin)) {
 			User existingUser = userDao.findUserByUserId(id);
 			OperationStatusModel returnValue = new OperationStatusModel();
 
-			if (existingUser.getRole() == UserRole.ADMIN) {
+			if (existingUser.getRole() == UserRole.SUPER_ADMIN) {
 				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
 				return returnValue;
 			}
@@ -175,7 +179,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper getUser(String id) throws UserServiceException {
 
-		if (Role.equals(UserRole.PROJECT_MANAGER.toString()) || Role.equals(UserRole.ADMIN.toString())) {
+		if (Role.equals(admin) || Role.equals(super_admin)) {
 			User user = userDao.findUserByUserId(id);
 			if (user == null) {
 				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
@@ -197,7 +201,7 @@ public class UserServiceImpl implements IUserService {
 
 		Role = userRole;
 
-		if (userRole.equals(UserRole.PROJECT_MANAGER.toString()) || userRole.equals(UserRole.ADMIN.toString())) {
+		if (userRole.equals(admin) || userRole.equals(super_admin)) {
 
 			List<User> allUser = userDao.findAll();
 			return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class))
