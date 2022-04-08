@@ -9,11 +9,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bugtracking.base.model.BaseEntity;
 import com.bugtracking.bug.Bug;
+import com.bugtracking.user.User;
 
 /**
  * The {@code Project} class represents mapping [Entity class] to database table
@@ -37,9 +40,6 @@ public class Project extends BaseEntity {
 	@Column(name = "decription")
 	private String description;
 
-	@Column(name = "createby")
-	private String createby;
-
 	@Column(name = "projet_owner")
 	private String projet_owner;
 
@@ -52,6 +52,10 @@ public class Project extends BaseEntity {
 
 	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	private List<Bug> bugs;
+
+	@ManyToOne
+	@JoinColumn(name = "userid_fk", nullable = false)
+	private User user;
 
 	public Project(Long id) {
 		this.id = id;
@@ -100,16 +104,16 @@ public class Project extends BaseEntity {
 		this.description = description;
 	}
 
-	public String getCreateby() {
-		return createby;
-	}
-
-	public void setCreateby(String createby) {
-		this.createby = createby;
-	}
-
 	public String getType() {
 		return type;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public void setType(String type) {

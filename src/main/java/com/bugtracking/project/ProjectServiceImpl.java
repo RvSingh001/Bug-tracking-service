@@ -33,7 +33,7 @@ public class ProjectServiceImpl implements IProjectService {
 
 	@Autowired
 	IBugService bugService;
-	
+
 	@Autowired
 	UserDao userDao;
 
@@ -63,12 +63,13 @@ public class ProjectServiceImpl implements IProjectService {
 	 */
 	@Override
 	public ProjectDetailsWrapper createProject(ProjectDetailsWrapper projectDetailsWrapper) {
-		
-		User user=userDao.findUserByUserId(projectDetailsWrapper.getCreateby());
+
+		User user = userDao.findUserByUserId(projectDetailsWrapper.getUserId());
 		String publicId = projectUtils.generateProjectId(15);
 		projectDetailsWrapper.setProjectId(publicId);
 		Project project = mapper.map(projectDetailsWrapper, Project.class);
-		project.setProjet_owner(user.getFirstName()+" "+user.getLastName());
+		project.setUser(user);
+		project.setProjet_owner(user.getFirstName() + " " + user.getLastName() + " " + "(" + user.getRole() + ")");
 		project = projectDao.save(project);
 		return mapper.map(project, ProjectDetailsWrapper.class);
 	}
@@ -76,7 +77,7 @@ public class ProjectServiceImpl implements IProjectService {
 	/**
 	 * Service Method used to update a existing project
 	 * 
-	 * @param id String
+	 * @param id                    String
 	 * @param projectDetailsWrapper ProjectDetailsWrapper
 	 * @return returnValue ProjectDetailsWrapper
 	 * @throws ProjectServiceException

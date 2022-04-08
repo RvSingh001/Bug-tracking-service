@@ -13,11 +13,19 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 
 	private String type;
 
-	private String createby;
-
 	private String projet_owner;
 
 	private ProjectStatus status;
+
+	private String userId;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public String getProjet_owner() {
 		return projet_owner;
@@ -25,14 +33,6 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 
 	public void setProjet_owner(String projet_owner) {
 		this.projet_owner = projet_owner;
-	}
-
-	public String getCreateby() {
-		return createby;
-	}
-
-	public void setCreateby(String createby) {
-		this.createby = createby;
 	}
 
 	public String getProjectId() {
@@ -73,13 +73,6 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 
 	public void setStatus(ProjectStatus status) {
 		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return "ProjectDetailsWrapper [projectId=" + projectId + ", projectName=" + projectName + ", description="
-				+ description + ", type=" + type + ", createby=" + createby + ", projet_owner=" + projet_owner
-				+ ", status=" + status + "]";
 	}
 
 }
