@@ -9,7 +9,7 @@
 		<version>2.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bugtracking</groupId>
+	<groupId>com.bts</groupId>
 	<artifactId>bug-tracking-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bug-tracking-service</name>
@@ -123,16 +123,10 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<apiDocsUrl>http://localhost:8082/v3/api-docs</apiDocsUrl>
-					<outputFileName>openapi.json</outputFileName>
-					<outputDir>C:\Bug-Tracker\Bug-tracking-service\</outputDir>
-				</configuration>
+			
 			</plugin>
 
 		</plugins>
-
-
 
 	</build>
 
