@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.bugtracking.security.ApplicationProperty;
+import com.bugtracking.security.SecurityConstants;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -28,12 +29,12 @@ public class AppConfig {
 	public SpringApplicationContext springApplicationContext() {
 		return new SpringApplicationContext();
 	}
-
+	
 	@Bean
 	public ApplicationProperty applicationProperty() {
 		return new ApplicationProperty();
 	}
-
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurerAdapter() {

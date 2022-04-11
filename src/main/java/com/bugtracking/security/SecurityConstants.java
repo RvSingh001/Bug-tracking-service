@@ -1,5 +1,8 @@
 package com.bugtracking.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
 import com.bugtracking.SpringApplicationContext;
 
 public class SecurityConstants {
@@ -15,8 +18,6 @@ public class SecurityConstants {
 
 	public static final String SING_UP_URL = "/api/users/";
 
-	public static final String SWAGGER_URL = "/swagger-ui/index.html?configUrl=/bug/v3/api-docs/swagger-config";
-
 	public static String getTokenSecret() {
 		return applicationProperty.getTokenSecret();
 	}
@@ -25,16 +26,8 @@ public class SecurityConstants {
 		return Integer.parseInt(applicationProperty.getExpritionTime());
 	}
 
-	public static int getEmailVerificationTokenExpritionTime() {
-		return Integer.parseInt(applicationProperty.getEmailVerificationTokenExpritionTime());
-	}
-
 	public static String getTokenPrefix() {
 		return applicationProperty.getTokenPrefix();
-	}
-
-	public static String getSignupUrl() {
-		return applicationProperty.getSignupUrl();
 	}
 
 	public static String getHeaderString() {
