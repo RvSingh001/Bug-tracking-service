@@ -24,9 +24,9 @@ public class UserRestImpl implements IUserRest {
 	 * 
 	 **/
 	@Override
-	public List<UserResponseWrapper> getAllUser(String userRole) {
-		System.out.print(userRole);
-		return userServiceImpl.getAllUsers(userRole);
+	public List<UserResponseWrapper> getAllUser() {
+
+		return userServiceImpl.getAllUsers();
 	}
 
 	/**
@@ -52,11 +52,11 @@ public class UserRestImpl implements IUserRest {
 		logger.info("In UserRestImpl getProject Parameter id {}", id);
 		return userServiceImpl.getUser(id);
 	}
-	
+
 	/**
 	 * Controller Method used to update a existing user
 	 * 
-	 * @param id String
+	 * @param id                 String
 	 * @param userDetailsWrapper UserDetailsWrapper
 	 * @return returnValue UserResponseWrapper
 	 * 
@@ -90,7 +90,7 @@ public class UserRestImpl implements IUserRest {
 	public List<UserResponseWrapper> getAllDeveloper() {
 		return userServiceImpl.getAllDevUser();
 	}
-	
+
 	/**
 	 * Controller Method used to set active status of existing user by usertId
 	 * 

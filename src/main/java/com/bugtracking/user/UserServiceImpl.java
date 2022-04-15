@@ -42,11 +42,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	static String Role;
-	
-	static String admin="ADMIN";
-	
-	static String super_admin="SUPER_ADMIN";
+
 
 	/**
 	 * Service Method used to create a User
@@ -57,7 +53,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper createUser(UserDetailsWrapper userDetailsWrapper) {
 
-		if (Role.equals(admin) || Role.equals(super_admin)) {
+		
 
 			if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
 				throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
@@ -68,8 +64,8 @@ public class UserServiceImpl implements IUserService {
 			User user = mapper.map(userDetailsWrapper, User.class);
 			user = userDao.save(user);
 			return mapper.map(user, UserResponseWrapper.class);
-		}
-		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
+		
+	
 	}
 
 	/**
@@ -84,7 +80,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper)
 			throws UserServiceException {
-		if (Role.equals(admin) || Role.equals(super_admin)) {
+		
 
 			User storeUser = userDao.findUserByUserId(id);
 
@@ -101,8 +97,8 @@ public class UserServiceImpl implements IUserService {
 			storeUser.setRole(userDetailsWrapper.getRole());
 			User returnValue = userDao.save(storeUser);
 			return mapper.map(returnValue, UserResponseWrapper.class);
-		}
-		throw new UserServiceException(ErrorMessages.COULD_NOT_UPDATE_RECORD.getErrorMessage());
+		
+		
 	}
 
 	/**
@@ -115,7 +111,7 @@ public class UserServiceImpl implements IUserService {
 	@Transactional
 	public OperationStatusModel deleteUser(String id) {
 
-		if (Role.equals(admin) || Role.equals(super_admin)) {
+		
 
 			OperationStatusModel returnValue = new OperationStatusModel();
 			User user = userDao.findUserByUserId(id);
@@ -130,8 +126,8 @@ public class UserServiceImpl implements IUserService {
 			userDao.deleteByUserId(id);
 			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
 			return returnValue;
-		}
-		throw new UserServiceException(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
+		
+		
 	}
 
 	/**
@@ -142,7 +138,7 @@ public class UserServiceImpl implements IUserService {
 	 **/
 	@Override
 	public OperationStatusModel activedUser(String id) {
-		if (Role.equals(admin) || Role.equals(super_admin)) {
+		
 			User existingUser = userDao.findUserByUserId(id);
 			OperationStatusModel returnValue = new OperationStatusModel();
 
@@ -165,8 +161,8 @@ public class UserServiceImpl implements IUserService {
 			userDao.save(existingUser);
 			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
 			return returnValue;
-		}
-		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+	
 
 	}
 
@@ -179,15 +175,13 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper getUser(String id) throws UserServiceException {
 
-		if (Role.equals(admin) || Role.equals(super_admin)) {
+		
 			User user = userDao.findUserByUserId(id);
 			if (user == null) {
 				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 			}
 			return mapper.map(user, UserResponseWrapper.class);
-		}
-		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-
+		
 	}
 
 	/**
@@ -197,18 +191,16 @@ public class UserServiceImpl implements IUserService {
 	 * 
 	 **/
 	@Override
-	public List<UserResponseWrapper> getAllUsers(String userRole) {
+	public List<UserResponseWrapper> getAllUsers() {
 
-		Role = userRole;
-
-		if (userRole.equals(admin) || userRole.equals(super_admin)) {
+	
 
 			List<User> allUser = userDao.findAll();
 			return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class))
 					.collect(Collectors.toList());
-		}
+		
 
-		throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
 
 	}
 

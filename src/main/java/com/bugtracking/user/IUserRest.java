@@ -30,8 +30,8 @@ public interface IUserRest {
 	@PutMapping(path = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public UserResponseWrapper updateUser(@PathVariable String id,@RequestBody UserDetailsWrapper userDetailsWrapper);
 
-	@GetMapping(path = "/role/{userRole}")
-	public List<UserResponseWrapper> getAllUser(@PathVariable String userRole);
+	@GetMapping("")
+	public List<UserResponseWrapper> getAllUser();
 
 	@DeleteMapping(path = "/{id}")
 	public OperationStatusModel deleteUser(@PathVariable String id);
