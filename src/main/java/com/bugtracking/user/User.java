@@ -2,6 +2,7 @@ package com.bugtracking.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,7 +50,7 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Bug> bugs;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Project> project;
 
 	public User(Long id) {

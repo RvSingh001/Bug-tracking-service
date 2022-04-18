@@ -42,8 +42,6 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
 	/**
 	 * Service Method used to create a User
 	 * 
@@ -53,25 +51,22 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper createUser(UserDetailsWrapper userDetailsWrapper) {
 
-		
+		if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
+			throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+		}
+		userDetailsWrapper.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
+		String publicId = userUtils.generateUserId(15);
+		userDetailsWrapper.setUserId(publicId);
+		User user = mapper.map(userDetailsWrapper, User.class);
+		user = userDao.save(user);
+		return mapper.map(user, UserResponseWrapper.class);
 
-			if (userDao.findUserByEmail(userDetailsWrapper.getEmail()) != null) {
-				throw new UserServiceException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
-			}
-			userDetailsWrapper.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
-			String publicId = userUtils.generateUserId(15);
-			userDetailsWrapper.setUserId(publicId);
-			User user = mapper.map(userDetailsWrapper, User.class);
-			user = userDao.save(user);
-			return mapper.map(user, UserResponseWrapper.class);
-		
-	
 	}
 
 	/**
 	 * Service Method used to update a existing user
 	 * 
-	 * @param id String
+	 * @param id                 String
 	 * @param UserDetailsWrapper userDetailsWrapper
 	 * @return returnValue UserDetailsWrapper
 	 * @throws UserServiceException
@@ -80,25 +75,23 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper updateUser(String id, UserDetailsWrapper userDetailsWrapper)
 			throws UserServiceException {
-		
 
-			User storeUser = userDao.findUserByUserId(id);
+		User storeUser = userDao.findUserByUserId(id);
 
-			if (userDetailsWrapper.getRole() == UserRole.SUPER_ADMIN) {
-				throw new UserServiceException(ErrorMessages.SUPER_ADMIN.getErrorMessage());
-			}
-			if (storeUser == null) {
-				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			}
-			storeUser.setFirstName(userDetailsWrapper.getFirstName());
-			storeUser.setLastName(userDetailsWrapper.getLastName());
-			storeUser.setEmail(userDetailsWrapper.getEmail());
-			storeUser.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
-			storeUser.setRole(userDetailsWrapper.getRole());
-			User returnValue = userDao.save(storeUser);
-			return mapper.map(returnValue, UserResponseWrapper.class);
-		
-		
+//		if (userDetailsWrapper.getRole() == UserRole.SUPER_ADMIN) {
+//			throw new UserServiceException(ErrorMessages.SUPER_ADMIN.getErrorMessage());
+//		}
+		if (storeUser == null) {
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		storeUser.setFirstName(userDetailsWrapper.getFirstName());
+		storeUser.setLastName(userDetailsWrapper.getLastName());
+		storeUser.setEmail(userDetailsWrapper.getEmail());
+		storeUser.setPassword(bCryptPasswordEncoder.encode(userDetailsWrapper.getPassword()));
+		storeUser.setRole(userDetailsWrapper.getRole());
+		User returnValue = userDao.save(storeUser);
+		return mapper.map(returnValue, UserResponseWrapper.class);
+
 	}
 
 	/**
@@ -111,23 +104,20 @@ public class UserServiceImpl implements IUserService {
 	@Transactional
 	public OperationStatusModel deleteUser(String id) {
 
-		
+		OperationStatusModel returnValue = new OperationStatusModel();
+		User user = userDao.findUserByUserId(id);
 
-			OperationStatusModel returnValue = new OperationStatusModel();
-			User user = userDao.findUserByUserId(id);
+//		if (user.getRole() == UserRole.SUPER_ADMIN) {
+//			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+//			return returnValue;
+//		}
 
-			if (user.getRole() == UserRole.SUPER_ADMIN) {
-				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-				return returnValue;
-			}
+		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+		userDao.deleteByUserId(id);
+		returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
+		return returnValue;
 
-			returnValue.setOperationName(RequestOperationName.DELETE.name());
-			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-			userDao.deleteByUserId(id);
-			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
-			return returnValue;
-		
-		
 	}
 
 	/**
@@ -138,31 +128,29 @@ public class UserServiceImpl implements IUserService {
 	 **/
 	@Override
 	public OperationStatusModel activedUser(String id) {
-		
-			User existingUser = userDao.findUserByUserId(id);
-			OperationStatusModel returnValue = new OperationStatusModel();
 
-			if (existingUser.getRole() == UserRole.SUPER_ADMIN) {
-				returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
-				return returnValue;
-			}
-			if (existingUser == null) {
-				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			}
+		User existingUser = userDao.findUserByUserId(id);
+		OperationStatusModel returnValue = new OperationStatusModel();
 
-			boolean status = existingUser.isActive();
-			if (status) {
-				returnValue.setOperationName(RequestOperationName.DEACTIVE.name());
-				existingUser.setActive(false);
-			} else {
-				returnValue.setOperationName(RequestOperationName.ACTIVE.name());
-				existingUser.setActive(true);
-			}
-			userDao.save(existingUser);
-			returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
-			return returnValue;
-		
-	
+//		if (existingUser.getRole() == UserRole.SUPER_ADMIN) {
+//			returnValue.setOperationStatus(RequestOperationStatus.ERROR.name());
+//			return returnValue;
+//		}
+		if (existingUser == null) {
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+
+		boolean status = existingUser.isActive();
+		if (status) {
+			returnValue.setOperationName(RequestOperationName.DEACTIVE.name());
+			existingUser.setActive(false);
+		} else {
+			returnValue.setOperationName(RequestOperationName.ACTIVE.name());
+			existingUser.setActive(true);
+		}
+		userDao.save(existingUser);
+		returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
+		return returnValue;
 
 	}
 
@@ -175,13 +163,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserResponseWrapper getUser(String id) throws UserServiceException {
 
-		
-			User user = userDao.findUserByUserId(id);
-			if (user == null) {
-				throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			}
-			return mapper.map(user, UserResponseWrapper.class);
-		
+		User user = userDao.findUserByUserId(id);
+		if (user == null) {
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		return mapper.map(user, UserResponseWrapper.class);
+
 	}
 
 	/**
@@ -193,14 +180,8 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public List<UserResponseWrapper> getAllUsers() {
 
-	
-
-			List<User> allUser = userDao.findAll();
-			return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class))
-					.collect(Collectors.toList());
-		
-
-
+		List<User> allUser = userDao.findAll();
+		return allUser.stream().map(user -> mapper.map(user, UserResponseWrapper.class)).collect(Collectors.toList());
 
 	}
 
