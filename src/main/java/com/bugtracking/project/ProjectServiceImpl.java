@@ -64,12 +64,9 @@ public class ProjectServiceImpl implements IProjectService {
 	@Override
 	public ProjectDetailsWrapper createProject(ProjectDetailsWrapper projectDetailsWrapper) {
 
-		User user = userDao.findUserByUserId(projectDetailsWrapper.getUserId());
 		String publicId = projectUtils.generateProjectId(15);
 		projectDetailsWrapper.setProjectId(publicId);
 		Project project = mapper.map(projectDetailsWrapper, Project.class);
-		project.setUser(user);
-		project.setProjet_owner(user.getFirstName() + " " + user.getLastName() + " " + "(" + user.getRole() + ")");
 		project = projectDao.save(project);
 		return mapper.map(project, ProjectDetailsWrapper.class);
 	}

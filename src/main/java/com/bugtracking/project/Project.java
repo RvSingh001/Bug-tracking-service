@@ -40,9 +40,6 @@ public class Project extends BaseEntity {
 	@Column(name = "decription")
 	private String description;
 
-	@Column(name = "projet_owner")
-	private String projet_owner;
-
 	@Column(name = "type")
 	private String type;
 
@@ -53,10 +50,6 @@ public class Project extends BaseEntity {
 	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	private List<Bug> bugs;
 
-	@ManyToOne
-	@JoinColumn(name = "userid_fk", nullable = false)
-	private User user;
-
 	public Project(Long id) {
 		this.id = id;
 	}
@@ -66,14 +59,6 @@ public class Project extends BaseEntity {
 
 	public enum ProjectStatus {
 		ACTIVE, NOT_ACTIVE, DEPLOYED, CLOSE, INPROGRESS;
-	}
-
-	public String getProjet_owner() {
-		return projet_owner;
-	}
-
-	public void setProjet_owner(String projet_owner) {
-		this.projet_owner = projet_owner;
 	}
 
 	public String getProjectName() {
@@ -106,14 +91,6 @@ public class Project extends BaseEntity {
 
 	public String getType() {
 		return type;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public void setType(String type) {

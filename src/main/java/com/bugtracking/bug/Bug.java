@@ -138,7 +138,7 @@ public class Bug extends BaseEntity {
 	}
 
 	public enum BugStatus {
-		FIX, OPEN, CLOSE, NOT_AN_ISSUE, IN_PROGRESS
+		FIX, OPEN, CLOSE, NOT_AN_ISSUE, IN_PROGRESS, REOPEN
 	}
 
 	public enum BugPriority {

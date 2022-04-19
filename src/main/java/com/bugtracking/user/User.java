@@ -50,22 +50,11 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Bug> bugs;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private List<Project> project;
-
 	public User(Long id) {
 		this.id = id;
 	}
 
 	public User() {
-	}
-
-	public List<Project> getProject() {
-		return project;
-	}
-
-	public void setProject(List<Project> project) {
-		this.project = project;
 	}
 
 	public List<Bug> getBugs() {

@@ -13,27 +13,7 @@ public class ProjectDetailsWrapper extends BaseWrapper {
 
 	private String type;
 
-	private String projet_owner;
-
 	private ProjectStatus status;
-
-	private String userId;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getProjet_owner() {
-		return projet_owner;
-	}
-
-	public void setProjet_owner(String projet_owner) {
-		this.projet_owner = projet_owner;
-	}
 
 	public String getProjectId() {
 		return projectId;

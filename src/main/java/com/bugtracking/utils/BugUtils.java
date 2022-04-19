@@ -24,16 +24,16 @@ public class BugUtils {
 		return generateRandomUserId(length);
 	}
 
+	public String generateBugId(int length) {
+		return generateRandomUserId(length);
+	}
+
 	private String generateRandomUserId(int length) {
 		StringBuilder returnValue = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
 			returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
 		}
 		return returnValue.toString();
-	}
-
-	public String generateBugId(int length) {
-		return generateRandomUserId(length);
 	}
 
 }
