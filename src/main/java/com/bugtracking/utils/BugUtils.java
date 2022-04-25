@@ -16,9 +16,6 @@ public class BugUtils {
 		return generateRandomUserId(length);
 	}
 
-	public String generateAddressId(int length) {
-		return generateRandomUserId(length);
-	}
 
 	public String generateProjectId(int length) {
 		return generateRandomUserId(length);

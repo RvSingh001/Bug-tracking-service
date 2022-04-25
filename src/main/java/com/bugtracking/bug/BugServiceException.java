@@ -14,16 +14,5 @@ public class BugServiceException extends RuntimeException {
 		super(message);
 	}
 
-	public BugServiceException(Throwable cause) {
-		super(cause);
-	}
-
-	public BugServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public BugServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
 
 }

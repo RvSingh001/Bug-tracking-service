@@ -123,7 +123,9 @@
 						</goals>
 					</execution>
 				</executions>
-			
+				<configuration>
+					<outputDir>C:\Bug-Tracker\Bug-tracking-service\</outputDir>
+				</configuration>
 			</plugin>
 
 		</plugins>
