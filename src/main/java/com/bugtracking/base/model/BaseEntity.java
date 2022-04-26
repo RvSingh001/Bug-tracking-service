@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+public class BaseEntity {
 
 	@Column(updatable = false)
 	@CreationTimestamp
