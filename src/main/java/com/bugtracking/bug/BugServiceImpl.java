@@ -42,11 +42,11 @@ public class BugServiceImpl implements IBugService {
 	@Autowired
 	UserDao userDao;
 
-	public BugServiceImpl(BugDao bugDao, ProjectDao projectDao, UserDao userDao) {
-		this.bugDao = bugDao;
-		this.projectDao = projectDao;
-		this.userDao = userDao;
-	}
+//	public BugServiceImpl(BugDao bugDao, ProjectDao projectDao, UserDao userDao) {
+//		this.bugDao = bugDao;
+//		this.projectDao = projectDao;
+//		this.userDao = userDao;
+//	}
 
 	/**
 	 * Service Method used to get a bug by bugId

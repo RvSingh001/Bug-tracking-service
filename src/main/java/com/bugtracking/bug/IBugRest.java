@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bugtracking.shared.OperationStatusModel;
 
 @ResponseBody
-@RequestMapping(produces = { MediaType.APPLICATION_JSON_VALUE }, path = "/api/bugs")
+@RequestMapping( "/api/bugs")
 public interface IBugRest {
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })

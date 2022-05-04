@@ -17,7 +17,7 @@ import com.bugtracking.user.shared.OperationStatusModel;
 
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:4201", "" })
 @ResponseBody
-@RequestMapping(produces = { MediaType.APPLICATION_JSON_VALUE }, path = "/api/users")
+@RequestMapping("/api/users")
 
 public interface IUserRest {
 

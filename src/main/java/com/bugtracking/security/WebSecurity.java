@@ -1,5 +1,7 @@
 package com.bugtracking.security;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import com.bugtracking.user.IUserService;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	private final IUserService detailsService;
+	Logger logger = LogManager.getLogger(this.getClass());
 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -24,7 +27,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+		logger.info("In P");
+System.out.println(HttpMethod.POST);
+System.out.println(SecurityConstants.SING_UP_URL);
 		http.csrf().disable().cors().and().authorizeRequests()
 				.antMatchers(HttpMethod.POST, SecurityConstants.SING_UP_URL).permitAll().anyRequest().authenticated()
 				.and().addFilter(getAuthenticateFilter()).addFilter(new AuthorizationFilter(authenticationManager()))
