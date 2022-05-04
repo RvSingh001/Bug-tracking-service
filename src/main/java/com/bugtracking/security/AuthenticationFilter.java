@@ -68,7 +68,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		response.addHeader("UserId", userDetails.getUserId());
 		response.addHeader("UserRole", userDetails.getRole().name());
 		response.addHeader("UserEmail", userDetails.getEmail());
-		response.addHeader("UserPassword", userDetails.getPassword());
 		response.addHeader("UserName", userDetails.getFirstName()+" "+userDetails.getLastName());
 	}
 

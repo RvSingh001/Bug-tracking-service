@@ -2,7 +2,7 @@ package com.bugtracking.base.wrapper;
 
 import java.time.LocalDateTime;
 
-public abstract class BaseWrapper {
+public class BaseWrapper {
 
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;

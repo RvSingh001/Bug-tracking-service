@@ -98,13 +98,14 @@ public class BugServiceImpl implements IBugService {
 	@Override
 	public BugDetailsWrapper updatebug(String id, BugDetailsWrapper bugDetailsWrapper) throws BugServiceException {
 		Bug storeBug = bugDao.findByBugId(id);
+		User assignUser = userDao.findUserByUserId(bugDetailsWrapper.getUserId());
 		if (storeBug == null) {
 			throw new BugServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		}
 		storeBug.setDescription(bugDetailsWrapper.getDescription());
 		storeBug.setTitle(bugDetailsWrapper.getTitle());
-
 		storeBug.setStatus(bugDetailsWrapper.getStatus());
+		storeBug.setDeveloper(assignUser.getFirstName() + " " + assignUser.getLastName());
 		Bug returnValue = bugDao.save(storeBug);
 		return mapper.map(returnValue, BugDetailsWrapper.class);
 	}

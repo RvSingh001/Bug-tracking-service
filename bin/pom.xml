@@ -123,11 +123,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<apiDocsUrl>http://localhost:8082/v3/api-docs</apiDocsUrl>
-					<outputFileName>openapi.json</outputFileName>
-					<outputDir>C:\Bug-Tracker\Bug-tracking-service\</outputDir>
-				</configuration>
 			</plugin>
 
 		</plugins>
